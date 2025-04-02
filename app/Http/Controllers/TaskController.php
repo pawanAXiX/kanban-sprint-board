@@ -14,8 +14,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $groupByStatus=Task::all()->groupBy('status');
-        return $groupByStatus->map(fn($tasks)=>TaskResource::collection($tasks));
+
+        return TaskResource::collection(Task::all());
     }
 
     /**
@@ -23,7 +23,8 @@ class TaskController extends Controller
      */
     public function store(CreateTaskRequest $request)
     {
-        $task= new Task($request->validated());
+         $task=Task::create($request->validated());
+//        $task= new Task($request->validated());
         return new TaskResource($task);
     }
 
