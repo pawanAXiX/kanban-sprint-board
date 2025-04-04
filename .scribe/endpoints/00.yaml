@@ -1,0 +1,320 @@
+name: Endpoints
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/tasks
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '[{"status":"not started","tasks":[{"id":11,"name":"Lolita Zieme","description":"A et quod rerum quibusdam quae. Dolores eligendi natus vitae dolores. Qui molestias vitae aliquid necessitatibus quibusdam accusantium rem.","priority":"low","order":0,"status":"not started"},{"id":14,"name":"Lulu Boyer","description":"Quo facere accusamus modi omnis porro consequatur. Ab numquam doloremque sit consequuntur modi molestias placeat.","priority":"medium","order":1,"status":"not started"}]},{"status":"in progress","tasks":[{"id":20,"name":"Alexandria Haag","description":"Cumque natus et laborum corporis. Est neque quis provident recusandae maxime ratione quibusdam. Eaque et velit libero est. Nihil sunt eos quos voluptatem facilis dolorem.","priority":"high","order":0,"status":"in progress"},{"id":12,"name":"Tracey Kessler Sr.","description":"Sint non quaerat sed. Sit et dignissimos ut unde dolorem. Sed facere voluptas aperiam harum accusantium aspernatur ut sapiente.","priority":"high","order":1,"status":"in progress"},{"id":17,"name":"Ruth Windler","description":"Minus id aut itaque officia accusamus aliquam delectus. Qui voluptas consequuntur nihil quibusdam tempore est autem.","priority":"medium","order":2,"status":"in progress"}]},{"status":"active","tasks":[{"id":15,"name":"Jerome Hammes","description":"Quo vel corporis temporibus et. Mollitia eius consequatur accusantium cupiditate omnis. Labore quam at nihil amet qui alias distinctio. Quibusdam accusamus velit minus quia.","priority":"low","order":0,"status":"active"},{"id":16,"name":"Mr. Kristian Medhurst","description":"Facilis asperiores totam quia atque dolore et veniam. Sunt ad sed perferendis asperiores perferendis. Ipsam velit fugit enim eum vitae.","priority":"high","order":1,"status":"active"},{"id":18,"name":"Ms. Vanessa Breitenberg III","description":"Distinctio iure in ex modi minus. Temporibus inventore ratione debitis ratione placeat aut. Provident nemo minima praesentium asperiores molestiae rem tempora expedita.","priority":"medium","order":2,"status":"active"},{"id":21,"name":"test","description":null,"priority":"low","order":3,"status":"active"}]},{"status":"archived","tasks":[{"id":13,"name":"Dayna Hoppe PhD","description":"Nobis rem aut ut vero. Accusantium debitis voluptatibus officiis eum magnam deserunt. Enim ducimus sed qui et voluptatem placeat. Cumque deleniti et quis.","priority":"low","order":0,"status":"archived"},{"id":19,"name":"Jayson Gleason","description":"Exercitationem eum sequi culpa minus. Cumque veniam nihil rerum. Aut cupiditate est dignissimos dolorem aut praesentium. Nesciunt eligendi nihil vel consequatur earum.","priority":"low","order":1,"status":"archived"}]}]'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/tasks
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      description:
+        name: description
+        description: ''
+        required: false
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      status:
+        name: status
+        description: ''
+        required: true
+        example: active
+        type: string
+        enumValues:
+          - 'not started'
+          - 'in progress'
+          - active
+          - archived
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      priority:
+        name: priority
+        description: ''
+        required: false
+        example: medium
+        type: string
+        enumValues:
+          - low
+          - medium
+          - high
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      order:
+        name: order
+        description: ''
+        required: false
+        example: 4326.41688
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+    cleanBodyParameters:
+      name: architecto
+      description: 'Eius et animi quos velit et.'
+      status: active
+      priority: medium
+      order: 4326.41688
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/tasks/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update the specified resource in storage.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the task.'
+        required: true
+        example: 11
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 11
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      description:
+        name: description
+        description: ''
+        required: false
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      priority:
+        name: priority
+        description: ''
+        required: false
+        example: medium
+        type: string
+        enumValues:
+          - low
+          - medium
+          - high
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+    cleanBodyParameters:
+      name: architecto
+      description: 'Eius et animi quos velit et.'
+      priority: medium
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/tasks/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remove the specified resource from storage.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the task.'
+        required: true
+        example: 11
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 11
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: 'api/tasks/{task_id}/reorder'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      task_id:
+        name: task_id
+        description: 'The ID of the task.'
+        required: true
+        example: 11
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      task_id: 11
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      newStatus:
+        name: newStatus
+        description: ''
+        required: true
+        example: 'not started'
+        type: string
+        enumValues:
+          - 'not started'
+          - 'in progress'
+          - active
+          - archived
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      index:
+        name: index
+        description: ''
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      newStatus: 'not started'
+      index: 16
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
