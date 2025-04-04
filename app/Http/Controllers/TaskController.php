@@ -16,9 +16,9 @@ class TaskController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(TaskService::getGroupedTasks())->setStatusCode(200);
+        return response()->json(Task::getGroupedTasks())->setStatusCode(200);
     }
-    
+
 
     public function store(CreateTaskRequest $request): JsonResponse
     {
@@ -35,7 +35,7 @@ class TaskController extends Controller
     {
         $task->reorderInStatus($request->input('index'), $request->input('newStatus'));
 
-        return response()->json($this->getGroupedTasks());
+        return response()->json(Task::getGroupedTasks());
     }
 
     /**
