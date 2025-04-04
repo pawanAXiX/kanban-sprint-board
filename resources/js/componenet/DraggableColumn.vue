@@ -1,19 +1,24 @@
 <template>
-    <div v-for="colName in Object.keys(data)" class="px-2 pt-1 flex flex-col">
+    <div v-for="column in columns" class="px-2 pt-1 flex flex-col">
         <div>
-            <span class="text-uppercase">{{ colName }}</span>
+            <span class="text-uppercase">{{ column }}</span>
         </div>
 
-        <div>
+        <div >
             <draggable
-                :data-col-name="colName"
-                :list="tasks[obj]"
+                :data-col-name="column"
+                :list="tasks[column]"
                 group="task"
                 @end="pushUpdate"
                 itemKey="name"
             >
+                <div v-for="task in tasks[column]" :data-item-id="task.id" >
+                    <h2>{{task.name}}</h2>
+                </div>
 
             </draggable>
+            <div>
+            </div>
             <div class="px-5 py-5 border border-blue">
                 <button slot="footer">Add</button>
             </div>
@@ -24,30 +29,42 @@
 <script setup>
 
 import {VueDraggableNext} from 'vue-draggable-next'
-import {onMounted, ref, watch} from "vue";
+import {computed, onBeforeMount, onMounted, reactive, ref, toRaw, watch} from "vue";
+import {apiCall} from "../global/api.js";
 
 const draggable = VueDraggableNext;
-const props = defineProps(['data']);
-const colNames= ref([]);
-const tasks = ref(props.data);
+
+const list=ref({})
+const columns=ref([])
+const tasks=ref({})
+
+onBeforeMount(async ()=>{
+    const {colNames,taskArray}=await apiCall.fetchTasks()
+    columns.value=colNames;
+    tasks.value=taskArray;
+
+
+
+
+})
+
+
+
 
 const pushUpdate = (event => {
     const oldColumn = event.from.dataset.colName;
     const newColumn = event.to.dataset.colName;
-    const itemId = parseInt(event.item.getAttribute('data-item-id'));
-
-    console.log('Old Col:' + oldColumn)
-    console.log('New Col:' + newColumn)
-    console.log('Item ID:' + itemId)
-
-    const repeaterOfNewColumn = document.querySelector(`[data-col-name="${newColumn}"]`)
-    console.log(repeaterOfNewColumn)
+    const itemId = parseInt(event.item.dataset.itemId);
+    const getTaskArray=toRaw(tasks.value[newColumn]);
+    console.log(getTaskArray);
+    const item =getTaskArray.find((item)=>item.id===itemId);
+    const index=getTaskArray.indexOf(item);
+    const response=apiCall.fetchReorder(itemId,newColumn,index)
 
 })
 
+watch(tasks,()=>{
+    console.log("changed");
 
-
-onMounted(() => {
-    console.log(tasks.value)
-})
+},{deep:true})
 </script>

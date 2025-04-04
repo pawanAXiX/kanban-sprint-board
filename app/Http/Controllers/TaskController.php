@@ -33,6 +33,7 @@ class TaskController extends Controller
 
     public function reorder(Task $task, ReorderTaskRequest $request)
     {
+
         $task->reorderInStatus($request->input('index'), $request->input('newStatus'));
 
         return response()->json(Task::getGroupedTasks());
