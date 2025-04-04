@@ -13,9 +13,8 @@
 import axios from "axios";
 import {onMounted, reactive, ref, watch} from "vue";
 import DraggableColumn from "../componenet/DraggableColumn.vue";
-import colData from "../global/colData.js";
-const list=ref({});
 
+const list=ref({});
 const lists=ref({});
 const storeOrdering=ref('');
 const fetchTasks=async ()=>{
@@ -25,7 +24,6 @@ const fetchTasks=async ()=>{
         lists.value[item.status]=item.tasks;
         })
     console.log(lists.value);
-
 
 }
 
