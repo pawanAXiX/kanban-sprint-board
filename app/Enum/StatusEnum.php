@@ -10,7 +10,7 @@ enum StatusEnum:string
     case ARCHIVED = 'archived';
 
 
-    public function label():int{
+    public function number():int{
         return match ($this){
             StatusEnum::NOT_STARTED => 0,
             StatusEnum::IN_PROGRESS => 1,

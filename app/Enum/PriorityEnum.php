@@ -8,7 +8,7 @@ enum PriorityEnum:string
     case MEDIUM = 'medium';
     case HIGH = 'high';
 
-    public function label():int{
+    public function number():int{
         return match ($this){
             PriorityEnum::LOW => 0,
             PriorityEnum::MEDIUM => 1,
@@ -16,6 +16,7 @@ enum PriorityEnum:string
 
         };
     }
+
 
 
 

@@ -2,38 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\StatusEnum;
 use App\Http\Requests\CreateTaskRequest;
+use App\Http\Requests\ReorderTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): JsonResponse
     {
-
-        return TaskResource::collection(Task::all());
+        return response()->json($this->getGroupedTasks());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(CreateTaskRequest $request)
+    public function getGroupedTasks()
     {
-         $task=Task::create($request->validated());
-//        $task= new Task($request->validated());
-        return new TaskResource($task);
+        $carry = [];
+
+        foreach (StatusEnum::cases() as $statusEnum) {
+            $carry[$statusEnum->value] = [
+                'status' => $statusEnum->value,
+                'tasks' => []
+            ];
+        }
+
+         Task::query()
+            ->get()
+            ->groupBy('status.value')
+            ->map(function ($tasks, $status) use (&$carry) {
+                $carry[$status] = [
+                    'status' => $status,
+                    'tasks' => TaskResource::collection($tasks->sortBy('order')),
+                ];
+            });
+
+         return array_values($carry);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function store(CreateTaskRequest $request): JsonResponse
     {
-        //
+        $maxOrder=Task::query()->where('status',$request->input('status'))->max('order');
+        $task = Task::create($request->validated());
+        $task->order=$maxOrder+1;
+        $task->save();
+        return response()->json(TaskResource::make($task));
+    }
+
+    public function reorder(Task $task, ReorderTaskRequest $request)
+    {
+        $task->reorderInStatus($request->input('index'), $request->input('newStatus'));
+
+        return response()->json($this->getGroupedTasks());
     }
 
     /**
@@ -50,6 +71,6 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $task->delete();
-        return response()->json(['message'=>'success'],204);
+        return response()->json(['message' => 'success'], 204);
     }
 }
