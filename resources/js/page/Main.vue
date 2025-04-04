@@ -1,12 +1,7 @@
 <template>
-    <div class="px-50">
-    <div class="w-full h-full px-5 py-5 text-white mx-auto">
-        <div class="grid grid-cols-4 px-2 gap-5 py-4   bg-[#1E2022] border border-gray-100 rounded-lg ">
-                <DraggableColumn :data="list"  />
-<!--                <DraggableColumn :list="doneTasks" colName="Done" colId="2" />-->
-<!--            <DraggableColumn :list="archivedTasks" colName="Archived" colId="3"/>-->
-<!--                <DraggableColumn v-model:myArray="archivedTasks" colName="Archived" colId="3"/>-->
-        </div>
+    <div class="px-2 py-2 w-full">
+    <div class="h-full flex grid grid-cols-4">
+        <DraggableColumn :data="lists"  />
     </div>
     </div>
 </template>
@@ -21,17 +16,15 @@ import DraggableColumn from "../componenet/DraggableColumn.vue";
 import colData from "../global/colData.js";
 const list=ref({});
 
-
-const notStartedTasks=ref([]);
-const archivedTasks=ref([]);
-const inProgressTasks=ref([]);
-const doneTasks=ref([])
-
+const lists=ref({});
 const storeOrdering=ref('');
 const fetchTasks=async ()=>{
     const items=await axios.get('http://localhost:8000/api/tasks')
     list.value=items.data;
-    console.log(list.value);
+    list.value.forEach((item)=>{
+        lists.value[item.status]=item.tasks;
+        })
+    console.log(lists.value);
 
 
 }

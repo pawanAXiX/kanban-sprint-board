@@ -31,7 +31,7 @@ class CreateTaskRequest extends FormRequest
             'description' => ['nullable','string'],
             'status' => ['required',Rule::enum(StatusEnum::class)],
             'priority' => ['nullable',Rule::enum(PriorityEnum::class)],
-            'order' => ['numeric','required'],
+            'order' => ['nullable','numeric'],
         ];
     }
 }

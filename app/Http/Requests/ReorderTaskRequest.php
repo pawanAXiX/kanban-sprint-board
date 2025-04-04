@@ -11,7 +11,6 @@ class ReorderTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'oldStatus' => ['required', 'string', Rule::enum(StatusEnum::class)],
             'newStatus' => ['required', 'string', Rule::enum(StatusEnum::class)],
             'index' => ['required', 'integer'],
         ];

@@ -1,0 +1,45 @@
+components:
+  schemas:
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        order:
+          type: integer
+
+    CreateTaskRequest:
+      type: object
+      required:
+        - name
+        - description
+        - status
+        - order
+        - priority
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          required: false
+        priority:
+          type: string
+          required: false
+
+
+    UpdateTaskRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+
