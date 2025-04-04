@@ -45,9 +45,15 @@ class TaskController extends Controller
     {
         // update  name and description of task
         $name=$request->input('name');
+        $priority=$request->input('priority');
         $description=$request->input('description');
         $task=Task::query()->findOrFail($id);
-        $task->update(['name'=>$name,'description'=>$description]);
+        if($task->name!=$name)
+            $task->name=$name;
+        if(filled($priority))
+            $task->priority=$priority;
+        $task->description=$description;
+        $task->save();
         return response()->json(TaskResource::make($task));
     }
 

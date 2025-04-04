@@ -43,7 +43,6 @@ class Task extends Model
         $this->updateIndexInColumn($index);
     }
 
-
     public static function taskRemovedFromStatus(string $status, int $order): void
     {
         self::query()
@@ -133,7 +132,6 @@ class Task extends Model
             });
 
     }
-
 
 
 }

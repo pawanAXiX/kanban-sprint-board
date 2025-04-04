@@ -2,17 +2,18 @@
 
 namespace App\Http\Requests;
 
+use App\Enum\PriorityEnum;
+use App\Models\Task;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use function Termwind\parse;
 
 class UpdateTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return false;
-    }
+
 
     /**
      * Get the validation rules that apply to the request.
@@ -21,9 +22,12 @@ class UpdateTaskRequest extends FormRequest
      */
     public function rules(): array
     {
+
+
         return [
-            'name'=>['required','string'],
+            'name'=>['required','string',Rule::unique(Task::class,'name')->ignore($this->task)],
             'description'=>['nullable','string'],
+            'priority'=>['nullable','string',Rule::enum(PriorityEnum::class)],
         ];
     }
 }
