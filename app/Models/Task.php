@@ -20,10 +20,7 @@ class Task extends Model
         'priority' => PriorityEnum::class
     ];
 
-    public function scopeStatus()
-    {
-        return $this->status->number();
-    }
+
 
     public function reorderInStatus(int $index, string $newStatus)
     {
@@ -45,6 +42,7 @@ class Task extends Model
 
     public static function taskRemovedFromStatus(string $status, int $order): void
     {
+
         self::query()
             ->where('status', $status)
             ->where('order', '>', $order)
@@ -80,7 +78,6 @@ class Task extends Model
     public static function getGroupedTasks()
     {
         $carry = [];
-
         foreach (StatusEnum::cases() as $statusEnum) {
             $carry[$statusEnum->value] = [
                 'status' => $statusEnum->value,
