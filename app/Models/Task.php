@@ -30,28 +30,25 @@ class Task extends Model
             return;
         }
 
+        $oldStatus = $this->status->value;
+
         if ($this->status->value !== $newStatus) {
-            $this->removeFromStatus($newStatus);
+            $this->update(['status' => $newStatus]);
+            $this->taskRemovedFromStatus($oldStatus, $this->order);
         }
 
         $this->updateIndex($index);
     }
 
 
-
-    public function removeFromStatus(string $newStatus): void
+    public static function taskRemovedFromStatus(string $status, int $order): void
     {
-        $oldStatus = $this->status;
-
-        $this->update(['status' => $newStatus]);
-
-        Task::query()
-            ->where('status', $oldStatus->value)
-            ->where('order', '>', $this->order)
-            ->whereNot('id', $this->id)
+        self::query()
+            ->where('status', $status)
+            ->where('order', '>', $order)
             ->get()
-            ->map(function (Task $taskInStatus) {
-                return $taskInStatus->decrement('order');
+            ->each(function (Task $taskInStatus) {
+                $taskInStatus->decrement('order');
             });
     }
 
@@ -75,8 +72,8 @@ class Task extends Model
             ->where('order', '>=', $this->order)
             ->whereNot('id',$this->id)
             ->get()
-            ->map(function (Task $taskInStatus) {
-                return $taskInStatus->increment('order');
+            ->each(function (Task $taskInStatus) {
+                $taskInStatus->increment('order');
             });
 
 

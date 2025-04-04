@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enum\StatusEnum;
 use App\Http\Requests\CreateTaskRequest;
 use App\Http\Requests\ReorderTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
@@ -60,9 +61,14 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateTaskRequest $request, string $id)
     {
-        //
+        // update  name and description of task
+        $name=$request->input('name');
+        $description=$request->input('description');
+        $task=Task::query()->findOrFail($id);
+        $task->update(['name'=>$name,'description'=>$description]);
+        return response()->json(TaskResource::make($task));
     }
 
     /**
@@ -70,6 +76,7 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        Task::taskRemovedFromStatus($task->status->vlaue,$task->order);
         $task->delete();
         return response()->json(['message' => 'success'], 204);
     }
