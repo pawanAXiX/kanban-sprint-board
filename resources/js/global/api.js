@@ -4,18 +4,11 @@ export const apiCall={
     async fetchTasks(){
         const response=await axios.get('http://localhost:8000/api/tasks')
         const items=await response.data;
-        const taskArray={}
 
-        let i=0;
-        items.forEach((item)=>{
-            taskArray[item.status]=item.tasks;
-        })
-        const colNames=Object.keys(taskArray);
-
-
+        const colNames=Object.keys(items);
 
         return {
-            colNames,taskArray
+            colNames,items
         };
     },
     async fetchReorder(id,column,index){
@@ -24,7 +17,13 @@ export const apiCall={
             'index':index
         }
         const response =await axios.post(`http://localhost:8000/api/tasks/${id}/reorder`,requestBody);
-        console.log(response.data)
+        const items=await response.data;
+        const colNames=Object.keys(items);
+
+        return {
+            colNames,items
+        };
+
     }
 
 }

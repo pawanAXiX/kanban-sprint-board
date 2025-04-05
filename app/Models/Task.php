@@ -78,24 +78,20 @@ class Task extends Model
     public static function getGroupedTasks()
     {
         $carry = [];
-        foreach (StatusEnum::cases() as $statusEnum) {
-            $carry[$statusEnum->value] = [
-                'status' => $statusEnum->value,
-                'tasks' => []
-            ];
+
+
+        foreach (StatusEnum::cases() as $status) {
+            $carry[$status->value] = [];
         }
 
         Task::query()
             ->get()
+            ->sortBy('order')
             ->groupBy('status.value')
-            ->map(function ($tasks, $status) use (&$carry) {
-                $carry[$status] = [
-                    'status' => $status,
-                    'tasks' => TaskResource::collection($tasks->sortBy('order')),
-                ];
+            ->map(function ($tasks,$status) use (&$carry) {
+                $carry[$status] = $tasks;
             });
-
-        return array_values($carry);
+        return $carry;
     }
 
     public function updateIndexInColumn(int $index)

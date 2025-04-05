@@ -36,6 +36,7 @@ class TaskController extends Controller
 
         $task->reorderInStatus($request->input('index'), $request->input('newStatus'));
 
+
         return response()->json(Task::getGroupedTasks());
     }
 
@@ -55,7 +56,7 @@ class TaskController extends Controller
             $task->priority=$priority;
         $task->description=$description;
         $task->save();
-        return response()->json(TaskResource::make($task));
+        return response()->json(TaskResource::make($task))->setStatusCode(202);
     }
 
     /**
