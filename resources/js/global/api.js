@@ -24,7 +24,28 @@ export const apiCall={
             colNames,items
         };
 
+    },
+    async createTask(name,description,priority,status){
+        const requestBody={
+            name,
+            description,
+            priority,
+            status
+        }
+        const response =await axios.post(`http://localhost:8000/api/tasks/`,requestBody);
+        const item=response.data;
+        console.log(item);
+    },
+    async updateTask(id,name,description,priority){
+        const requestBody={
+            id,
+            name,
+            description,
+            priority
+        }
+        const response =await axios.put(`http://localhost:8000/api/tasks/${id}/`,requestBody);
+        const item=response.data;
+        console.log(item);
     }
-
 }
 

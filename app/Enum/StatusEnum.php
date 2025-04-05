@@ -6,7 +6,7 @@ enum StatusEnum:string
 {
     case NOT_STARTED='not started';
     case IN_PROGRESS = 'in progress';
-    case DONE = 'active';
+    case DONE = 'done';
     case ARCHIVED = 'archived';
 
 
