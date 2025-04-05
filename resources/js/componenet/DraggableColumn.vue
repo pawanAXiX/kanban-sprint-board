@@ -9,7 +9,7 @@
                 <draggable
                     class="flex flex-col gap-4 "
                     :data-col-name="column"
-                    
+
                     :list="tasks"
                     group="task"
                     @end="pushUpdate"
